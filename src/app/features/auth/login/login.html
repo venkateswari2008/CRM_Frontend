@@ -1,0 +1,68 @@
+<div class="auth-page">
+  <mat-card class="auth-card">
+    <div class="auth-card__header">
+      <mat-icon class="auth-card__brand">hub</mat-icon>
+      <h1>Sign in to CRM</h1>
+      <p class="muted">Cognizant Customer Relationship Management</p>
+    </div>
+
+    @if (reason() === 'expired') {
+      <div class="alert alert--info">Your session expired. Please sign in again.</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="on" class="auth-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username or email</mat-label>
+        <input matInput formControlName="usernameOrEmail" autocomplete="username" autofocus />
+        @if (form.controls.usernameOrEmail.touched && form.controls.usernameOrEmail.invalid) {
+          <mat-error>Username or email is required.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hidePassword() ? 'password' : 'text'"
+          autocomplete="current-password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword.set(!hidePassword())"
+          aria-label="Show/hide password"
+        >
+          <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+        </button>
+        @if (form.controls.password.touched && form.controls.password.errors?.['required']) {
+          <mat-error>Password is required.</mat-error>
+        }
+        @if (form.controls.password.touched && form.controls.password.errors?.['minlength']) {
+          <mat-error>At least 8 characters.</mat-error>
+        }
+      </mat-form-field>
+
+      @if (errorMessage()) {
+        <div class="alert alert--error">{{ errorMessage() }}</div>
+      }
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="submitting()" class="full-width">
+        @if (submitting()) {
+          <mat-spinner diameter="20" />
+        } @else {
+          Sign in
+        }
+      </button>
+
+      <p class="auth-card__footer muted">
+        New to CRM? <a routerLink="/signup">Create an account</a>
+      </p>
+
+      <p class="auth-card__hint muted">
+        Demo users: <code>admin</code> / <code>demo.user</code> &mdash; password <code>ChangeMe!123</code>
+      </p>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,89 @@
+<div class="page">
+  <div class="page-header">
+    <h1 class="page-title">Customers</h1>
+    <button mat-flat-button color="primary" (click)="create()">
+      <mat-icon>add</mat-icon>
+      <span>New Customer</span>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="toolbar">
+      <mat-form-field appearance="outline" class="search">
+        <mat-label>Search</mat-label>
+        <input matInput [formControl]="search" placeholder="Name, email, company..." />
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+      <span class="spacer"></span>
+      <span class="muted">{{ total() }} customer{{ total() === 1 ? '' : 's' }}</span>
+    </div>
+
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" />
+    }
+
+    <table mat-table [dataSource]="items()" class="full-width">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let c">{{ c.fullName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let c">{{ c.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Phone</th>
+        <td mat-cell *matCellDef="let c" class="muted">{{ c.phone || '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="company">
+        <th mat-header-cell *matHeaderCellDef>Company</th>
+        <td mat-cell *matCellDef="let c">{{ c.company || '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>City</th>
+        <td mat-cell *matCellDef="let c" class="muted">{{ c.city || '—' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="actions-col">Actions</th>
+        <td mat-cell *matCellDef="let c" class="actions-col">
+          <button mat-icon-button [matMenuTriggerFor]="rowMenu" aria-label="Row actions">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #rowMenu="matMenu">
+            <button mat-menu-item (click)="edit(c)" [disabled]="isAdmin() !== 'Admin'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="remove(c)" [disabled]="isAdmin() !== 'Admin'">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    @if (!loading() && items().length === 0) {
+      <div class="empty">
+        <mat-icon>group_off</mat-icon>
+        <p>No customers found.</p>
+      </div>
+    }
+
+    <mat-paginator
+      [length]="total()"
+      [pageSize]="pageSize()"
+      [pageIndex]="page() - 1"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      (page)="onPage($event)"
+    />
+  </div>
+</div>

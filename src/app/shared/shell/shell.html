@@ -1,0 +1,52 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav #drawer mode="side" [opened]="sidenavOpen()" class="shell__nav">
+    <div class="brand">
+      <mat-icon class="brand__icon">hub</mat-icon>
+      <span class="brand__text">CRM</span>
+    </div>
+    <mat-nav-list>
+      @for (item of nav; track item.route) {
+        <a
+          mat-list-item
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="shell__toolbar">
+      <button mat-icon-button (click)="toggle()" aria-label="Toggle navigation">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="shell__title">Customer Relationship Management</span>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="userMenu" aria-label="User menu">
+        <div class="user-chip">
+          <span class="user-chip__avatar">{{ initials() || '?' }}</span>
+          <span class="user-chip__name">{{ user()?.username }}</span>
+          <mat-icon>expand_more</mat-icon>
+        </div>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <div class="user-menu-info">
+          <strong>{{ user()?.username }}</strong>
+          <span class="muted">{{ user()?.email }}</span>
+          <span class="muted">Role: {{ user()?.role }}</span>
+        </div>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Sign out</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    <main class="shell__content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

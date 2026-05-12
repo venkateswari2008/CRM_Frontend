@@ -1,0 +1,33 @@
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  min-width: 480px;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.alert--error {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid rgba(179, 38, 30, 0.3);
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    min-width: auto;
+  }
+
+  .span-2 {
+    grid-column: span 1;
+  }
+}
