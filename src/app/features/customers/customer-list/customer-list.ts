@@ -15,7 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
-import { AuthService } from '../../../core/auth/auth.service';
+import { HasRoleDirective } from '../../../core/auth/has-role.directive';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { CustomerForm } from '../customer-form/customer-form';
 import { Customer } from '../customers.models';
@@ -36,6 +36,7 @@ import { CustomersService } from '../customers.service';
     MatProgressBarModule,
     MatTooltipModule,
     MatDialogModule,
+    HasRoleDirective,
   ],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.scss',
@@ -44,14 +45,12 @@ export class CustomerList {
   private readonly customers = inject(CustomersService);
   private readonly dialog = inject(MatDialog);
   private readonly snackbar = inject(MatSnackBar);
-  private readonly auth = inject(AuthService);
 
   readonly items = signal<Customer[]>([]);
   readonly total = signal(0);
   readonly page = signal(1);
   readonly pageSize = signal(10);
   readonly loading = signal(false);
-  readonly isAdmin = this.auth.role;
 
   readonly search = new FormControl('', { nonNullable: true });
 

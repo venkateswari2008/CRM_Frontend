@@ -24,6 +24,14 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         void router.navigate(['/login'], { queryParams: { reason: 'expired' } });
       }
 
+      if (err.status === 403) {
+        snackbar.open(
+          "Your role doesn't permit this action.",
+          'Dismiss',
+          { duration: 5000, panelClass: 'snackbar-error' },
+        );
+      }
+
       const message = extractMessage(err);
       if (err.status >= 500 || err.status === 0) {
         snackbar.open(message, 'Dismiss', { duration: 6000, panelClass: 'snackbar-error' });

@@ -20,6 +20,7 @@ export interface Sale {
   amount: number;
   saleDate: string;
   expectedCloseDate?: string | null;
+  actualCloseDate?: string | null;
   notes?: string | null;
   createdAt: string;
   updatedAt?: string | null;

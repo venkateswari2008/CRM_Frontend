@@ -16,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
+import { HasRoleDirective } from '../../../core/auth/has-role.directive';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { SaleForm } from '../sale-form/sale-form';
 import { Sale, SALE_STAGES, SaleStage } from '../sales.models';
@@ -38,6 +39,7 @@ import { SalesService } from '../sales.service';
     MatChipsModule,
     MatProgressBarModule,
     MatDialogModule,
+    HasRoleDirective,
   ],
   templateUrl: './sale-list.html',
   styleUrl: '../../customers/customer-list/customer-list.scss',
@@ -57,7 +59,16 @@ export class SaleList {
   readonly search = new FormControl('', { nonNullable: true });
   readonly stageFilter = new FormControl<SaleStage | ''>('', { nonNullable: true });
 
-  readonly displayedColumns = ['name', 'company', 'pipeline', 'amount', 'stage', 'saleDate', 'actions'];
+  readonly displayedColumns = [
+    'name',
+    'company',
+    'pipeline',
+    'amount',
+    'stage',
+    'saleDate',
+    'closeDate',
+    'actions',
+  ];
 
   constructor() {
     this.search.valueChanges

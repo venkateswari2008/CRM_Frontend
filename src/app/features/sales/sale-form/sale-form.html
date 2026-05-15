@@ -53,9 +53,14 @@
       <mat-datepicker #d1 />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" (click)="d2.open()">
       <mat-label>Expected close date</mat-label>
-      <input matInput [matDatepicker]="d2" formControlName="expectedCloseDate" />
+      <input
+        matInput
+        [matDatepicker]="d2"
+        formControlName="expectedCloseDate"
+        (focus)="d2.open()"
+      />
       <mat-datepicker-toggle matIconSuffix [for]="d2" />
       <mat-datepicker #d2 />
     </mat-form-field>
