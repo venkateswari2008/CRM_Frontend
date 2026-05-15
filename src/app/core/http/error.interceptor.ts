@@ -33,6 +33,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       const message = extractMessage(err);
+      // 409 Conflict carries a meaningful business reason (e.g. "customer has active
+      // sales" or "email already exists") that the user must see. Forms still get the
+      // raw error via subscribe() if they want inline handling.
+      if (err.status === 409) {
+        snackbar.open(message, 'Dismiss', { duration: 6000, panelClass: 'snackbar-error' });
+      }
       if (err.status >= 500 || err.status === 0) {
         snackbar.open(message, 'Dismiss', { duration: 6000, panelClass: 'snackbar-error' });
       }
