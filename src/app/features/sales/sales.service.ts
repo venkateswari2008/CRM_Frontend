@@ -19,7 +19,7 @@ export interface SaleListQuery extends PageRequest {
 @Injectable({ providedIn: 'root' })
 export class SalesService {
   private readonly http = inject(HttpClient);
-  private readonly base = `${environment.apiBaseUrl}/sales`;
+  private readonly base = `${environment.apiBaseUrl}/api/sales`;
 
   list(query: SaleListQuery = {}): Observable<PagedResult<Sale>> {
     let params = new HttpParams();

@@ -15,7 +15,7 @@ export interface CustomerListQuery extends PageRequest {
 @Injectable({ providedIn: 'root' })
 export class CustomersService {
   private readonly http = inject(HttpClient);
-  private readonly base = `${environment.apiBaseUrl}/customers`;
+  private readonly base = `${environment.apiBaseUrl}/api/customers`;
 
   list(query: CustomerListQuery = {}): Observable<PagedResult<Customer>> {
     let params = new HttpParams();

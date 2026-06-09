@@ -22,13 +22,13 @@ export class AuthService {
 
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${environment.apiBaseUrl}/auth/login`, request)
+      .post<AuthResponse>(`${environment.apiBaseUrl}/api/auth/login`, request)
       .pipe(tap((response) => this.persist(response)));
   }
 
   signup(request: SignupRequest): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${environment.apiBaseUrl}/auth/signup`, request)
+      .post<AuthResponse>(`${environment.apiBaseUrl}/api/auth/signup`, request)
       .pipe(tap((response) => this.persist(response)));
   }
 

@@ -14,6 +14,6 @@ export class DashboardService {
     if (year !== undefined) {
       params = params.set('year', String(year));
     }
-    return this.http.get<DashboardOverview>(`${environment.apiBaseUrl}/dashboard`, { params });
+    return this.http.get<DashboardOverview>(`${environment.apiBaseUrl}/api/dashboard`, { params });
   }
 }
