@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://crm-apim-vev.azure-api.net',
+  apiBaseUrl: 'https://crm-frontdoor-e4bscjgwcdcvazbs.a01.azurefd.net',
 };
